@@ -23,6 +23,5 @@ public class Vagao {
     private Carga carga;//soja,SPC,milho,ureia,acucar
     private Long tara;
     private Long pesoBruto;
-    private Long pesoLiquido;
-    private Carga ultimaCarga;
+    private Carga ultimaCarga;//soja,SPC,milho,ureia,acucar
 }

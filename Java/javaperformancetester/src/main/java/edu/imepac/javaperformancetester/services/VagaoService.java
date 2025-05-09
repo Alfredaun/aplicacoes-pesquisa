@@ -2,6 +2,7 @@ package edu.imepac.javaperformancetester.services;
 
 import edu.imepac.javaperformancetester.models.Vagao;
 import edu.imepac.javaperformancetester.repositories.VagaoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +17,15 @@ public class VagaoService {
     @Autowired
     private VagaoRepository vagaoRepository;
 
-    @GetMapping
     public List<Vagao> findAll(){
         return vagaoRepository.findAll();
     }
 
-    @PostMapping
-    public Vagao create(@RequestBody Vagao vagao){
+    @Transactional
+    public List<Vagao> salvarTodos(List<Vagao> vagoes){
+        return vagaoRepository.saveAll(vagoes);
+    }
+    public Vagao create(Vagao vagao){
         return vagaoRepository.save(vagao);
     }
 

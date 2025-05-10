@@ -23,14 +23,14 @@ public class VagaoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
     }
 
-    @Timed(value = "api.entidade.insercao", description = "Tempo de inserção da entidade")
+    @Timed(value = "api.vagao.insercao", description = "Tempo de inserção do vagao")
     @PostMapping("/salvaremlote")
     public ResponseEntity<List<Vagao>> salvartodos(@RequestBody List<Vagao> vagoes){
         List<Vagao> salvos = vagaoService.salvarTodos(vagoes);
         return ResponseEntity.status(HttpStatus.CREATED).body(salvos);
     }
 
-    @Timed(value = "api.entidade.insercao", description = "Tempo de inserção da entidade")
+    @Timed(value = "api.vagao.listagem", description = "Tempo de listagem do vagao")
     @GetMapping
     public ResponseEntity<List<Vagao>> listarTodos(){
         List<Vagao> vagoes = vagaoService.findAll();

@@ -1,6 +1,6 @@
 package edu.imepac.javaperformancetester.controllers
 
-import edu.imepac.javaperformancetester.dtos.ResponseDto
+import edu.imepac.kotlinperformancetester.dtos.ResponseDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

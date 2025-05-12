@@ -1,43 +1,39 @@
 package edu.imepac.kotlinperformancetester.controllers
 
 import edu.imepac.kotlinperformancetester.dtos.ResponseDto
+import edu.imepac.kotlinperformancetester.models.Encoste
 import edu.imepac.kotlinperformancetester.models.Vagao
-import edu.imepac.kotlinperformancetester.services.VagaoService
+import edu.imepac.kotlinperformancetester.services.EncosteService
 import io.micrometer.core.annotation.Timed
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.integration.IntegrationProperties.Management
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.lang.management.ManagementFactory
 import java.lang.management.ThreadMXBean
 
 @RestController
-@RequestMapping("/vagao")
-class VagaoController {
+@RequestMapping("/encoste")
+class EncosteController(
     @Autowired
-    private lateinit var vagaoService: VagaoService
-
+    private val encosteService: EncosteService,
+) {
     @PostMapping
-    fun criar(@RequestBody vagao: Vagao): ResponseEntity<Vagao> {
-        val vagaoSalvo = vagaoService.create(vagao)
-        return ResponseEntity.status(HttpStatus.CREATED).body(vagaoSalvo)
+    fun criar(@RequestBody encoste: Encoste): ResponseEntity<Encoste> {
+        val encosteSalvo = encosteService.create(encoste)
+        return ResponseEntity.status(HttpStatus.CREATED).body(encosteSalvo)
     }
 
-    @Timed(value="api.vagao.insercao", description = "Tempo de inserção do vagao")
+    @Timed(value="api.encoste.insercao", description = "Tempo de inserção do encoste")
     @PostMapping("/salvaremlote")
-    fun salvarTodos(@RequestBody vagoes: List<Vagao>): ResponseEntity<ResponseDto<List<Vagao>>> {
+    fun salvarTodos(@RequestBody encostes: List<Encoste>): ResponseEntity<ResponseDto<List<Encoste>>> {
         val threadMXBean: ThreadMXBean = ManagementFactory.getThreadMXBean()
         val cpuTimeSupported: Boolean = threadMXBean.isThreadCpuTimeSupported
 
         val cpuStart = if (cpuTimeSupported) threadMXBean.currentThreadCpuTime else 0L
 
 
-        val salvos: List<Vagao> = vagaoService.salvarTodos(vagoes)
+        val salvos: List<Encoste> = encosteService.salvarTodos(encostes)
 
         val cpuEnd = if (cpuTimeSupported) threadMXBean.currentThreadCpuTime else 0L
         val cpuTimeMs = if (cpuTimeSupported) (cpuEnd - cpuStart) / 1_000_000 else -1L
@@ -46,19 +42,18 @@ class VagaoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(resposta)
     }
 
-    @Timed(value = "api.vagao.listagem", description = "Tempo de listagem do vagao")
+    @Timed(value = "api.encoste.listagem", description = "Tempo de listagem do encoste")
     @GetMapping
-    fun listarTodos(): ResponseEntity<ResponseDto<List<Vagao>>> {
+    fun listarTodos(): ResponseEntity<ResponseDto<List<Encoste>>> {
         val threadMXBean: ThreadMXBean = ManagementFactory.getThreadMXBean()
         val cpuTimeSupported: Boolean = threadMXBean.isThreadCpuTimeSupported
 
         val cpuStart = if (cpuTimeSupported) threadMXBean.currentThreadCpuTime else 0L
 
-        val vagoes: List<Vagao> = vagaoService.findAll()
+        val encostes: List<Encoste> = encosteService.findAll()
         val cpuEnd = if (cpuTimeSupported) threadMXBean.currentThreadCpuTime else 0L
         val cpuTimeMs = if (cpuTimeSupported) (cpuEnd - cpuStart) / 1_000_000 else -1L
-        val resposta = ResponseDto(cpuTimeMs, vagoes)
+        val resposta = ResponseDto(cpuTimeMs, encostes)
         return ResponseEntity.status(HttpStatus.OK).body(resposta)
     }
-
 }

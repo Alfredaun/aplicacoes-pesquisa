@@ -1,0 +1,2 @@
+GET http://localhost:8080/algoritmos/fatorial/17000
+GET http://localhost:8080/algoritmos/primos/100000000

@@ -16,8 +16,8 @@ class VagaoService {
     }
 
     @Transactional
-    fun salvarTodos(vagoes: List<Vagao>) {
-        vagaoRepository.saveAll(vagoes)
+    fun salvarTodos(vagoes: List<Vagao>) : List<Vagao> {
+        return vagaoRepository.saveAll(vagoes)
     }
     fun create(vagao: Vagao): Vagao {
         return vagaoRepository.save(vagao)

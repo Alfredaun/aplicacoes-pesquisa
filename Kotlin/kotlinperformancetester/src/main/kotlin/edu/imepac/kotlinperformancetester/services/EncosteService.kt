@@ -18,8 +18,8 @@ class EncosteService {
     }
 
     @Transactional
-    fun salvarTodos(encostes: List<Encoste>) {
-        encosteRepository.saveAll(encostes)
+    fun salvarTodos(encostes: List<Encoste>): List<Encoste> {
+        return encosteRepository.saveAll(encostes)
     }
     fun create(encoste: Encoste): Encoste {
         return encosteRepository.save(encoste)

@@ -1,4 +1,4 @@
-package edu.imepac.javaperformancetester.controllers
+package edu.imepac.kotlinperformancetester.controllers
 
 import edu.imepac.kotlinperformancetester.dtos.ResponseDto
 import org.springframework.http.HttpStatus

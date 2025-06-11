@@ -19,5 +19,10 @@ public class Encoste {
     private Long id;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "encoste_vagao",
+            joinColumns = @JoinColumn(name = "encoste_id"),
+            inverseJoinColumns = @JoinColumn(name = "vagao_id")
+    )
     private List<Vagao> vagoes = new ArrayList<>();
 }
